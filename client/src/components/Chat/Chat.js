@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import queryString from "query-string";
 import io from "socket.io-client";
 
+import InfoBar from "../InfoBar/InfoBar";
+
 import "./Chat.css";
 
 let socket;
@@ -9,6 +11,8 @@ let socket;
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
   const ENDPOINT = "localhost:5000";
   useEffect(() => {
     const { name, room } = queryString.parse(location.search); ///url을 각각의 값들로  parse 해 준다.
@@ -34,7 +38,32 @@ const Chat = ({ location }) => {
       socket.off(); // join off
     };
   }, [ENDPOINT, location.search]);
-  return <h1>Chat</h1>;
+
+  useEffect(() => {
+    socket.on("message", (message) => setMessages([...messages, message]));
+  }, [messages]);
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+    if (message) {
+      socket.emit("sendMessage", message, () => setMessage(""));
+    }
+  };
+  console.log(message, messages);
+  return (
+    <div className="outerContainer">
+      <div className="container">
+        <InfoBar room={room} />
+        <input
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+          onKeyPress={(event) =>
+            event.key === "Enter" ? sendMessage(event) : null
+          }
+        />
+      </div>
+    </div>
+  );
 };
 
 export default Chat;
