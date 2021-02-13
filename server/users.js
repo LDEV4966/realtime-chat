@@ -32,6 +32,6 @@ const removeUser = (id) => {
 
 const getUser = (id) => users.find((user) => user.id === id); // return specific user who we want to find
 
-const getUserInRoom = (room) => users.filter((user) => user.room === room); // return specific users array who participating in that room
+const getUsersInRoom = (room) => users.filter((user) => user.room === room); // return specific users array who participating in that room
 
-module.exports = { addUser, removeUser, getUser, getUserInRoom };
+module.exports = { addUser, removeUser, getUser, getUsersInRoom };

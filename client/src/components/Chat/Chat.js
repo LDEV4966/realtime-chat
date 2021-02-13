@@ -3,6 +3,9 @@ import queryString from "query-string";
 import io from "socket.io-client";
 
 import InfoBar from "../InfoBar/InfoBar";
+import Messages from "../Messages/Messages";
+import Input from "../Input/Input";
+import TextContainer from "../TextContainer/TextContainer";
 
 import "./Chat.css";
 
@@ -11,26 +14,30 @@ let socket;
 const Chat = ({ location }) => {
   const [name, setName] = useState("");
   const [room, setRoom] = useState("");
+  const [users, setUsers] = useState("");
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
   const ENDPOINT = "localhost:5000";
   useEffect(() => {
     const { name, room } = queryString.parse(location.search); ///url을 각각의 값들로  parse 해 준다.
 
+    //CORS HANDLING
     socket = io(ENDPOINT, {
-      //CORS HANDLING
       "force new connection": true,
       reconnectionAttempts: "Infinity",
       timeout: 10001,
       transports: ["websocket"],
     });
-    console.log(socket);
+    //console.log(socket);
 
     setName(name);
     setRoom(room);
 
-    socket.emit("join", { name, room }, () => {
+    socket.emit("join", { name, room }, (error) => {
       //server쪽 join의 callback함수가 호출될시 실행.
+      if (error) {
+        alert(error);
+      }
     });
     return () => {
       //will unmount
@@ -40,8 +47,15 @@ const Chat = ({ location }) => {
   }, [ENDPOINT, location.search]);
 
   useEffect(() => {
-    socket.on("message", (message) => setMessages([...messages, message]));
-  }, [messages]);
+    socket.on("message", (message) =>
+      setMessages((prev) => {
+        return [...prev, message];
+      })
+    );
+    socket.on("roomData", ({ users }) => {
+      setUsers(users);
+    });
+  }, []);
 
   const sendMessage = (event) => {
     event.preventDefault();
@@ -49,19 +63,18 @@ const Chat = ({ location }) => {
       socket.emit("sendMessage", message, () => setMessage(""));
     }
   };
-  console.log(message, messages);
   return (
     <div className="outerContainer">
       <div className="container">
         <InfoBar room={room} />
-        <input
-          value={message}
-          onChange={(event) => setMessage(event.target.value)}
-          onKeyPress={(event) =>
-            event.key === "Enter" ? sendMessage(event) : null
-          }
+        <Messages messages={messages} name={name} />
+        <Input
+          message={message}
+          setMessage={setMessage}
+          sendMessage={sendMessage}
         />
       </div>
+      <TextContainer users={users} />
     </div>
   );
 };
