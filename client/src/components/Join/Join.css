@@ -50,6 +50,7 @@ body {
   border: none;
   width: 100%;
   cursor: pointer;
+  font-size: 20px;
 }
 
 .mt-20 {
