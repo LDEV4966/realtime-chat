@@ -26,4 +26,6 @@ select:focus {
   display: inline-block;
   border: none;
   width: 20%;
+  cursor: pointer;
+  font-size: 20px;
 }
