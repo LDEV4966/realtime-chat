@@ -17,6 +17,7 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState("");
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [attachment, setAttachment] = useState("");
   const ENDPOINT = "localhost:5000";
   let history = useHistory();
 
@@ -73,6 +74,8 @@ const Chat = ({ location }) => {
         <Input
           message={message}
           setMessage={setMessage}
+          attachment={attachment}
+          setAttachment={setAttachment}
           sendMessage={sendMessage}
         />
       </div>
