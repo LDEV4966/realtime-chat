@@ -29,11 +29,14 @@ io.on("connection", (socket) => {
     if (error) return callback(error); // When error is happend, server response to client by callback function.
     socket.emit("message", {
       user: "admin",
-      text: `Hi ${user.name}~ . Welcome to the room '${user.room}'`,
+      type: "text",
+      body: `Hi ${user.name}~ . Welcome to the room '${user.room}'`,
     });
-    socket.broadcast
-      .to(user.room)
-      .emit("message", { user: "admin", text: `${user.name} has joined` });
+    socket.broadcast.to(user.room).emit("message", {
+      user: "admin",
+      type: "text",
+      body: `${user.name} has joined`,
+    });
     socket.join(user.room);
     io.to(user.room).emit("roomData", {
       room: user.room,
@@ -42,11 +45,40 @@ io.on("connection", (socket) => {
     callback(); // no error that means no parm in call back , nothing happen on the client side.
   });
 
-  socket.on("sendMessage", (message, callback) => {
+  socket.on("sendMessage", (messageObj, callback) => {
     const user = getUser(socket.id);
+    const messageType = messageObj.type;
 
-    io.to(user.room).emit("message", { user: user.name, text: message });
-
+    const checkTime = () => {
+      const d = new Date();
+      let hours = String(d.getHours());
+      if (hours.length == 1) {
+        hours = `0${hours}`;
+      }
+      let mins = String(d.getMinutes());
+      if (mins.length == 1) {
+        mins = `0${mins}`;
+      }
+      return { hours, mins };
+    };
+    date = checkTime();
+    if (messageType === "file") {
+      io.to(user.room).emit("message", {
+        user: user.name,
+        type: messageObj.type,
+        body: messageObj.body,
+        fileName: messageObj.fileName,
+        mimeType: messageObj.mimeType,
+        timeStamp: `${date.hours}:${date.mins}`,
+      });
+    } else {
+      io.to(user.room).emit("message", {
+        user: user.name,
+        type: messageObj.type,
+        body: messageObj.body,
+        timeStamp: `${date.hours}:${date.mins}`,
+      });
+    }
     callback();
   });
 
@@ -56,7 +88,8 @@ io.on("connection", (socket) => {
     if (user) {
       io.to(user.room).emit("message", {
         user: "admin",
-        text: `${user.name} has left.`,
+        type: "text",
+        body: `${user.name} has left.`,
       });
       io.to(user.room).emit("roomData", {
         room: user.room,

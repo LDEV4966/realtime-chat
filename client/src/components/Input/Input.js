@@ -5,35 +5,38 @@ const Input = ({
   setMessage,
   attachment,
   setAttachment,
+  file,
+  setFile,
   sendMessage,
+  onInitFile,
 }) => {
   const onFileChange = (event) => {
     const {
       target: { files },
     } = event;
+
     const theFile = files[0];
-    const reader = new FileReader();
-    reader.onloadend = (finishedEvent) => {
-      const {
-        currentTarget: { result },
-      } = finishedEvent;
-      setAttachment(result);
-    };
+
+    setFile(theFile);
+
     if (theFile) {
+      const reader = new FileReader();
       reader.readAsDataURL(theFile);
+      reader.onloadend = (finishedEvent) => {
+        const {
+          currentTarget: { result },
+        } = finishedEvent;
+        setAttachment(result);
+      };
     }
   };
-  const onDeleteFile = () => {
-    const inputFileElement = document.querySelector(".inputFile");
-    inputFileElement.value = "";
-    setAttachment("");
-  };
+
   return (
     <>
       {attachment && (
         <div className="attachment">
           <img className="attachmentImg" src={attachment} alt="attachment" />
-          <button onClick={onDeleteFile} className="delteFile-btn">
+          <button onClick={onInitFile} className="delteFile-btn">
             <i className="deleteFile fas fa-minus-circle fa-lg"></i>
           </button>
         </div>

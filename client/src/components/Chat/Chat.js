@@ -17,6 +17,7 @@ const Chat = ({ location }) => {
   const [users, setUsers] = useState("");
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [file, setFile] = useState();
   const [attachment, setAttachment] = useState("");
   const ENDPOINT = "localhost:5000";
   let history = useHistory();
@@ -58,12 +59,37 @@ const Chat = ({ location }) => {
     socket.on("roomData", ({ users }) => {
       setUsers(users);
     });
+    return () => {
+      console.log("Un Mount");
+    };
   }, []);
+
+  const onInitFile = () => {
+    const inputFileElement = document.querySelector(".inputFile");
+    inputFileElement.value = "";
+    setAttachment("");
+    setFile();
+  };
 
   const sendMessage = (event) => {
     event.preventDefault();
+    if (file) {
+      const messageObj = {
+        type: "file",
+        body: file,
+        fileName: file.name,
+        mimeType: file.type,
+      };
+      socket.emit("sendMessage", messageObj, () => {
+        onInitFile();
+      });
+    }
     if (message) {
-      socket.emit("sendMessage", message, () => setMessage(""));
+      const messageObj = {
+        type: "text",
+        body: message,
+      };
+      socket.emit("sendMessage", messageObj, () => setMessage(""));
     }
   };
   return (
@@ -76,6 +102,8 @@ const Chat = ({ location }) => {
           setMessage={setMessage}
           attachment={attachment}
           setAttachment={setAttachment}
+          file={file}
+          setFile={setFile}
           sendMessage={sendMessage}
         />
       </div>

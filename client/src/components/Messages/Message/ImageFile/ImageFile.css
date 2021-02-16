@@ -1,0 +1,12 @@
+.imageFile-container {
+  display: felx;
+  flex-direction: column;
+}
+.fileName {
+  display: none;
+}
+.fileImg {
+  height: 200px;
+  width: 200px;
+  border-radius: 10px;
+}

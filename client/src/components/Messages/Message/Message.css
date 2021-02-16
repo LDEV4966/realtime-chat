@@ -25,13 +25,33 @@
   padding: 0 5%;
   margin-top: 3px;
 }
+.messageInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 
 .sentText {
+  margin: 0;
+  margin-bottom: 5px;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   font-family: Helvetica;
   color: #828282;
   letter-spacing: 0.3px;
+}
+.admin {
+  display: flex;
+  align-items: center;
+}
+.timeStamp {
+  margin: 0;
+  font-size: 12px;
+  display: flex;
+}
+
+span i { 
+  color: rgb(214, 75, 75);
 }
 
 .pl-10 {
