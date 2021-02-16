@@ -19,7 +19,7 @@ const Chat = ({ location }) => {
   const [message, setMessage] = useState("");
   const [file, setFile] = useState();
   const [attachment, setAttachment] = useState("");
-  const ENDPOINT = "localhost:5000";
+  const ENDPOINT = "https://realtime-chats-app.herokuapp.com/";
   let history = useHistory();
 
   useEffect(() => {
