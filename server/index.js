@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
     socket.emit("message", {
       user: "admin",
       type: "text",
-      body: `Hi ${user.name}~ . Welcome to the room '${user.room}'`,
+      body: `Hi '${user.name}'! Welcome to the room '${user.room}'`,
     });
     socket.broadcast.to(user.room).emit("message", {
       user: "admin",
