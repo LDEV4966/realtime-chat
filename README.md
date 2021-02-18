@@ -38,7 +38,7 @@ html,css,javascript,react hooks
 
 - client : npm install --save react-router react-router-dom socket.io-client react-scroll-to-bottom react-emoji query-string
 
-### Deployment
+### WEB Hosting
 
 - Server : 'Heroku' /  https://realtime-chats-app.herokuapp.com/
 
