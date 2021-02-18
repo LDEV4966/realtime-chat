@@ -19,8 +19,9 @@ html,css,javascript,react hooks
 1. user name 과 room number을 입력받는다.
 2. 해당 room에 중복되는 user name 일시, 오류메세지
 3. chatting room 에서는 일반적인 메세지 , 사진 송수신이 가능.
-4. 추가적으로 현재 room에 참여한 인원을 보여준다.
-5. user의 입장, 퇴장시 서버에서 room에 참여한 전원에게 알림 기능을 제공.
+4. 메세지의 시간은 Coordinated Universal Time(UTC)을 기준으로 함.
+5. 추가적으로 현재 room에 참여한 인원을 보여준다.
+6. user의 입장, 퇴장시 서버에서 room에 참여한 전원에게 알림 기능을 제공.
   
   
 ### 기술
