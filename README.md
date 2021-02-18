@@ -2,10 +2,6 @@
 
 ## Build and Deploy a Realtime Chat App with Socket.io, Node.js and React.js
  
-- Web page for Client : https://602bbff9e592841e55a8141e--real-time-chat-site-leeseungmin.netlify.app/
-
-- Server : https://realtime-chats-app.herokuapp.com
-
 
 ### 필요한 언어 
 
@@ -44,9 +40,9 @@ html,css,javascript,react hooks
 
 ### Deployment
 
-- server : 'Heroku'
+- Server : 'Heroku' /  https://realtime-chats-app.herokuapp.com/
 
-- client : 'Netlify'
+- Client-page : 'Netlify' /  https://602bbff9e592841e55a8141e--real-time-chat-site-leeseungmin.netlify.app/
 
 ### 한계
 
