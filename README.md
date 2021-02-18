@@ -2,9 +2,10 @@
 
 ## Build and Deploy a Realtime Chat App with Socket.io, Node.js and React.js
  
+- Web page for Client : https://602bbff9e592841e55a8141e--real-time-chat-site-leeseungmin.netlify.app/
 
 - Server : https://realtime-chats-app.herokuapp.com
-- Client : https://602bbff9e592841e55a8141e--real-time-chat-site-leeseungmin.netlify.app/
+
 
 ### 필요한 언어 
 
@@ -33,4 +34,21 @@ html,css,javascript,react hooks
 
 3. client
 - based on React hooks
+
+### npm modules
+
+- server : npm install --save cors nodemon express socket.io
+
+- client : npm install --save react-router react-router-dom socket.io-client react-scroll-to-bottom react-emoji query-string
+
+### Deployment
+
+- server : 'Heroku'
+
+- client : 'Netlify'
+
+### 한계
+
+1. 핸드폰에서 사진 파일을 전송할 시, 서버쪽에서 사진 파일을 처리하지 못하는 것으로 보임.
+2. 한번에 많은 사진을 선택해 전송하려고 하는데, input Tag를 동적으로 늘려서 추가하는 것 외에는 생각이 나지 않음. 추후에 개선가능시 개선할 예정.
 
